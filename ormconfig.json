@@ -1,0 +1,17 @@
+
+{
+  "type": "mysql",
+  "host": "localhost",
+  "port": 3306,
+  "username": "gobarber_app",
+  "password": "gobarber_pass",
+  "database": "gbrbr",
+  "insecureAuth": true,
+  "extra": { "insecureAuth": true },
+  "migrations":[
+    "./src/database/migrations/*.ts"
+  ],
+  "cli":{
+    "migrations": "./src/database/migrations"
+  }
+}
