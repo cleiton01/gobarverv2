@@ -8,9 +8,7 @@ import AppError from '@shared/errors/AppError';
 import IUsersRepository from '@modules/users/repositories/IUsersRepository';
 
 interface IRequest {
-  name: string;
   email: string;
-  password: string;
 }
 
 @injectable()
@@ -18,13 +16,9 @@ class CreateUserService {
   constructor(
     @inject('UsersRepository')
     private usersRepository: IUsersRepository,
-    @inject('HashProvider')
-    private hashProvider: IHashProvider,
-
   ){}
 
-  public async execute ({name,password,email}: IRequest): Promise<User> {
-
+  public async execute ({email}: IRequest): Promise<void> {
     const checkIfUserExists = await this.usersRepository.findByEmail(email);
 
     if (checkIfUserExists){
@@ -34,15 +28,7 @@ class CreateUserService {
       );
     }
 
-    const hashedPassword = await this.hashProvider.genarateHash(password);
-
-    const user = await this.usersRepository.create({
-      name,
-      password: hashedPassword,
-      email,
-    });
-
-    return user;
+    //return user;
   }
 }
 

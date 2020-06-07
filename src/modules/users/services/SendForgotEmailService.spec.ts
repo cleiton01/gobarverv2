@@ -1,36 +1,29 @@
 import 'reflect-metadata';
 
-import CreateUserService from '@modules/users/services/CreateUserService';
+import SendForgotEmailService from '@modules/users/services/SendForgotEmailService';
 import FakeUsersRespository from '@modules/users/repositories/fakes/FakeUsersRepository';
 import FakeHashProvider from '@modules/users/providers/HashProvider/fakes/FakeHashProvider';
 import Error from '@shared/errors/AppError';
 
 describe('CreateUser',() => {
-  it('should be able to create a new user', async () => {
+  it('should be able to recove the password using email', async () => {
     const fakeUserRespository = new FakeUsersRespository();
-    const fakeHashProvider = new FakeHashProvider();
-    const createUser = new CreateUserService(fakeUserRespository, fakeHashProvider);
+    const createUser = new SendForgotEmailService(fakeUserRespository);
 
     const user = await createUser.execute({
-      name: 'John Doe',
-      email: 'John.Doe@exemple.com',
-      password: '123456'
+      email: 'John.Doe@exemple.com'
     });
 
     expect(user).toHaveProperty('id');
-    expect(user.name).toBe('John Doe');
 
   });
 
-  it('should not be able to create a new user with same e-mail', async () => {
+  it('should not be able to recove the password using email', async () => {
     const fakeUserRespository = new FakeUsersRespository();
-    const fakeHashProvider = new FakeHashProvider();
-    const createUser = new CreateUserService(fakeUserRespository, fakeHashProvider);
+    const createUser = new SendForgotEmailService(fakeUserRespository);
 
     await createUser.execute({
-      name: 'John Doe',
-      email: 'John.Doe@exemple.com',
-      password: '123456'
+      email: 'John.Doe@exemple.com'
     });
 
     expect(
