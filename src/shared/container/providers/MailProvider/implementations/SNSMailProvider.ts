@@ -5,7 +5,7 @@ interface IMessages{
   body: string;
 }
 
-class FakeMailProvider implements IMailProvider {
+class SNSMailProvider implements IMailProvider {
   private messages:IMessages[] = [];
 
   public async sendMail(to: string, body: string): Promise<void>{
@@ -13,5 +13,4 @@ class FakeMailProvider implements IMailProvider {
   };
 
 }
-
-export default FakeMailProvider;
+export default SNSMailProvider;
