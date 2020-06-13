@@ -1,3 +1,4 @@
+
 import nodemailer, {Transporter} from 'nodemailer';
 import {inject, injectable} from 'tsyringe';
 import IMailProvider from '@shared/container/providers/MailProvider/models/IMailProvider';
@@ -5,14 +6,8 @@ import ISendMailDTO from '@shared/container/providers/MailProvider/dtos/ISendMai
 
 import IMailTemplateProvider from '@shared/container/providers/MailTemplateProvider/models/IMailTemplateProvider'
 
-interface IMessages{
-  to: string;
-  body: string;
-}
-
-class SNSMailProvider implements IMailProvider {
-  private messages:IMessages[] = [];
-
+@injectable()
+class EtherealMailProvider implements IMailProvider{
   private client: Transporter;
 
   constructor(
@@ -52,6 +47,7 @@ class SNSMailProvider implements IMailProvider {
     console.log(message);
 
   }
-
 }
-export default SNSMailProvider;
+
+export default EtherealMailProvider;
+

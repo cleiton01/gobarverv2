@@ -5,7 +5,7 @@ import { query } from "express";
 
 export default class createUserTokenTable1591573270930 implements MigrationInterface {
 
-    public async up(queryRunner: QueryRunner): Promise<any> {
+    public async up(queryRunner: QueryRunner): Promise<void> {
       await queryRunner.createTable(
         new Table({
           name: 'user_token',
@@ -20,18 +20,39 @@ export default class createUserTokenTable1591573270930 implements MigrationInter
               name: 'token',
               type: 'varchar',
               isNullable: false,
+              generationStrategy: 'uuid'
             },
             {
               name: 'user_id',
               type: 'varchar',
               isNullable: false,
+            },
+            {
+              name: 'created_at',
+              type: 'timestamp',
+              default:'now()',
+            },
+            {
+              name: 'updated_at',
+              type: 'timestamp',
+              default:'now()',
             }
-          ]
-        })
-      )
+          ],
+          foreignKeys:[
+            {
+              name: 'TokenUser',
+              referencedTableName: 'users_v2',
+              referencedColumnNames: ['id'],
+              columnNames: ['user_id'],
+              onDelete: 'CASCADE',
+              onUpdate: 'CASCADE'
+            }
+          ],
+        }),
+      );
     }
 
-    public async down(queryRunner: QueryRunner): Promise<any> {
+    public async down(queryRunner: QueryRunner): Promise<void> {
       await queryRunner.dropTable('user_token');
     }
 
