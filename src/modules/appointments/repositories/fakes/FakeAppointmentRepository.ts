@@ -4,8 +4,9 @@ import {uuid} from 'uuidv4'
 
 import IAppointmentRepository from '@modules/appointments/repositories/IAppointmentRepository';
 import ICreateAppointmentDTO from '@modules/appointments/dto/ICreateAppointmentDTO';
+import IFindAllInMonthFromProviderDTO from '@modules/appointments/dto/IFindAllInMonthFromProviderDTO';
 
-class AppoinmentsRepository implements IAppointmentRepository {
+class FakeAppoinmentsRepository implements IAppointmentRepository {
   private appointments: Appointment[] = [];
 
   public async findByDate(date: Date) : Promise<Appointment | undefined> {
@@ -28,6 +29,8 @@ class AppoinmentsRepository implements IAppointmentRepository {
     return appointment;
   }
 
+  public async findAllInMonthFromProvider(data: IFindAllInMonthFromProviderDTO): Promise<Appointment[]>;
+
 }
 
-export default AppoinmentsRepository;
+export default FakeAppoinmentsRepository;
