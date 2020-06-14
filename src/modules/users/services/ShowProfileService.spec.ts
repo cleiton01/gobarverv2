@@ -4,17 +4,16 @@ import FakeUsersRespository from '@modules/users/repositories/fakes/FakeUsersRep
 import FakeHashProvider from '@modules/users/providers/HashProvider/fakes/FakeHashProvider';
 
 import AuthenticateUserService from '@modules/users/services/AuthenticateUserService';
-import UpdateProfileService from '@modules/users/services/UpdateProfileService';
+import ShowProfileService from '@modules/users/services/ShowProfileService';
 import Error from '@shared/errors/AppError';
 
-describe('UpdateUserProfile',() => {
-  it('should be able to update profile', async () => {
+describe('ShowUserProfile',() => {
+  it('should be able to show profile', async () => {
     const fakeUserRespository = new FakeUsersRespository();
     const fakeHashProvider = new FakeHashProvider();
 
-    const updateUserProfile = new UpdateProfileService(
-      fakeUserRespository,
-      fakeHashProvider
+    const showProfileService = new ShowProfileService(
+      fakeUserRespository
     );
 
     const user = await fakeUserRespository.create({
@@ -23,34 +22,28 @@ describe('UpdateUserProfile',() => {
       password: '123456'
     });
 
-    const resulte = await updateUserProfile.execute({
+    const resulte = await showProfileService.execute({
       user_id: user.id,
-      name: 'John Doer',
-      email: 'John.Doer@exemple.com',
     });
 
-    expect(resulte.name).toBe('John Doer');
-    expect(resulte.email).toBe('John.Doer@exemple.com');
+    expect(resulte.name).toBe('John Doe');
+    expect(resulte.email).toBe('John.Doe@exemple.com');
 
   });
 
-  it('should not be able to update from non exist user', async () => {
+  it('should not be able to show profile from a non-exists profile', async () => {
     const fakeUserRespository = new FakeUsersRespository();
     const fakeHashProvider = new FakeHashProvider();
 
-    const updateUserAvata = new UpdateProfileService(
-      fakeUserRespository,
-      fakeHashProvider
+    const showProfileService = new ShowProfileService(
+      fakeUserRespository
     );
 
-    expect(
-      authUser.execute({
-        email: 'John.Doi@exemple.com',
-        password: '123456'
+    await expect(
+      showProfileService.execute({
+        user_id: 'user.id'
       })
     ).rejects.toBeInstanceOf(Error);
 
   });
-
-
 });

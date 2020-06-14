@@ -27,6 +27,7 @@ class UpdateUserAvatarService {
   public async execute({user_id, avatarFileName}:Request):Promise<User>{
 
     const user = await this.usersRepository.findById(user_id);
+
     if(!user){
       throw new AppError(
         String(process.env.AUTH_INVALID_ACESS),

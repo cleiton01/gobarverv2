@@ -48,7 +48,6 @@ describe('ResertPasswordService',() => {
       password: '123456'
     });
 
-
     await expect(
       resetPassword.execute({
       password: '1234',
@@ -83,5 +82,26 @@ describe('ResertPasswordService',() => {
     })).rejects.toBeInstanceOf(Error);
 
   });
+
+  it('should not be able to reset password with non-existing token', async () => {
+    const fakeUserRespository = new FakeUsersRespository();
+    const fakeUserTokenRepository = new FakeUserTokenRepository();
+    const fakeHashProvider = new FakeHashProvider()
+    const resetPassword = new ResetPasswordService(fakeUserRespository, fakeUserTokenRepository, fakeHashProvider);
+
+    const user = await fakeUserRespository.create({
+      name: 'John Doe',
+      email: 'John.Doe@exemple.com',
+      password: '123456'
+    });
+
+    await expect(
+      resetPassword.execute({
+      password: '123456',
+      token: 'token'
+    })).rejects.toBeInstanceOf(Error);
+
+  });
+
 
 });

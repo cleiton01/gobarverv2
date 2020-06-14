@@ -37,7 +37,7 @@ describe('UpdateUserAvatar',() => {
 
   });
 
-  it('should not be able to update from non exist user', async () => {
+  it('should not be able to authenticate from non exist user', async () => {
     const fakeUserRespository = new FakeUsersRespository();
     const fakeHashProvider = new FakeHashProvider();
 
@@ -84,5 +84,24 @@ describe('UpdateUserAvatar',() => {
     expect(resulte1.avatar).toBe('avatar2.jpg');
 
   });
+
+  it('should not be able to update from non exist user', async () => {
+    const fakeUserRespository = new FakeUsersRespository();
+    const fakeStorageProvider = new FakeStorageProvider();
+
+    const updateUserAvata = new updateUserAvatarService(
+      fakeUserRespository,
+      fakeStorageProvider
+    );
+
+    expect(
+      updateUserAvata.execute({
+        user_id: `user.id`,
+      avatarFileName: 'avatar.jpg'
+      })
+    ).rejects.toBeInstanceOf(Error);
+
+  });
+
 
 });
