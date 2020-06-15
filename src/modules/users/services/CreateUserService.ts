@@ -4,7 +4,7 @@ import IHashProvider from '@modules/users/providers/HashProvider/models/IHashPro
 
 import User from '@modules/users/infra/typeorm/entities/User';
 import {inject, injectable} from 'tsyringe';
-import AppError from '@shared/errors/AppError';
+import Error from '@shared/errors/AppError';
 import IUsersRepository from '@modules/users/repositories/IUsersRepository';
 
 interface IRequest {
@@ -24,14 +24,11 @@ class CreateUserService {
   ){}
 
   public async execute ({name,password,email}: IRequest): Promise<User> {
-
+    
     const checkIfUserExists = await this.usersRepository.findByEmail(email);
 
     if (checkIfUserExists){
-      throw new AppError(
-        String(process.env.USER_ALREADY_EXISTIS),
-        Number(process.env.USER_ALREADY_EXISTIS_STATUS)
-      );
+      throw new Error('User already exists');
     }
 
     const hashedPassword = await this.hashProvider.genarateHash(password);

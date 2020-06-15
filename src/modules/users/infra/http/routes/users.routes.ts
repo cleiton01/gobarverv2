@@ -25,13 +25,4 @@ userRouter.patch('/avatar',
   userAvatarController.update
   );
 
-userRouter.put('/:id', (req, res) => {
-
-  return res.json({message: "hola"});
-});
-
-userRouter.delete('/', (req, res) => {
-  return res.json({message: "hola"});
-});
-
 export default userRouter;

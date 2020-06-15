@@ -18,6 +18,7 @@ interface IResponse{
   token: string;
 }
 
+
 @injectable()
 class AuthenticateUserService{
   constructor(
@@ -36,10 +37,10 @@ class AuthenticateUserService{
       throw new AppError(
         String(process.env.USER_PASS_INCORRECT),
         Number(process.env.USER_PASS_INCORRECT_STATUS)
-      );
-    }
+        );
+      }
 
-    const passwordMatched = await this.hashProvider.compareHash(password, user.password);
+      const passwordMatched = await this.hashProvider.compareHash(password, user.password);
 
     if(!passwordMatched){
       throw new AppError(
@@ -50,7 +51,7 @@ class AuthenticateUserService{
 
     const token = sign( {}, String(process.env.APP_SECRECT), {
       subject: user.id,
-      expiresIn: '5d',
+      expiresIn: '50d',
     });
 
     return {

@@ -21,11 +21,6 @@ container.registerSingleton<IMailTemplateProvider>(
 );
 
 container.registerInstance<IMailProvider>(
-  'SNSMail',
-  container.resolve(SNSMailProvider)
-);
-
-container.registerInstance<IMailProvider>(
   'MailProvider',
   container.resolve(EtherealMailProvider)
 );

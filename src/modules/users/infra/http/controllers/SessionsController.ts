@@ -1,11 +1,12 @@
 import {Request, Response} from 'express';
-import {container}from 'tsyringe';
+import {container} from 'tsyringe';
 
 import AuthenticateUserService from '@modules/users/services/AuthenticateUserService';
 
 class SessionsController{
   public async create(req: Request, res: Response){
-    const {email, password } = req.body;
+  const email = req.body.email;
+  const password = req.body.password;
 
   const authUser = container.resolve(AuthenticateUserService);
 

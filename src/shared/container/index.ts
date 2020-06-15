@@ -11,15 +11,23 @@ import UserRepository from '@modules/users/infra/typeorm/repositories/UserReposi
 import IUserTokenRopository from '@modules/users/repositories/IUserTokenRopository';
 import UserTokenRepository from '@modules/users/infra/typeorm/repositories/UserTokenRepository';
 
+import BCryptHashProvider from '@modules/users/providers/HashProvider/implementations/BCryptHashProvider';
+import IHashProvider from '@modules/users/providers/HashProvider/models/IHashProvider';
+
 
 container.registerSingleton<IAppointmentsRepository>(
   'AppointmentsRepository',
   AppointmentsRepository,
 );
 
-container.registerSingleton<IUsersRepository>(
-  'UserRepository',
-  UserRepository
+container.registerInstance<IUsersRepository>(
+  'UsersRepository',
+  new UserRepository()
+);
+
+container.registerSingleton<IHashProvider>(
+  'HashProvider',
+  BCryptHashProvider
 );
 
 container.registerSingleton<IUserTokenRopository>(

@@ -1,7 +1,7 @@
 import 'reflect-metadata';
 
 import CreateAppointmentService from '@modules/appointments/services/CreateAppointmentService';
-import FakeAppointmentRespository from '@modules/appointments/infra/typeorm/repositories/fakes/FakeAppointmentRepository';
+import FakeAppointmentRespository from '@modules/appointments/repositories/fakes/FakeAppointmentRepository';
 import Error from '@shared/errors/AppError';
 
 describe('CreateAppointment',() => {

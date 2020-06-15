@@ -21,14 +21,17 @@ class UsersRepository implements IUsersRepository {
     return user;
   }
   public async findAll(): Promise<User[] | undefined>{
-    return undefined;
+    return await this.ormRepository.find();
   }
 
   public async findByEmail(email: string) : Promise<User | undefined> {
-    const findUser = await this.ormRepository.findOne({
+    console.log('ta dificl');
+    console.log(email);
+    console.log(this.ormRepository);
+    const findUser = this.ormRepository.findOne({
       where: {email},
     });
-
+    console.log('passou aqui')
     return findUser;
   }
 
@@ -66,7 +69,6 @@ class UsersRepository implements IUsersRepository {
   public async save(user: User): Promise<User>{
     return await this.ormRepository.save(user);
   }
-
 
 }
 

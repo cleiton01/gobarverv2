@@ -35,6 +35,7 @@ class SNSMailProvider implements IMailProvider {
     });
   }
 
+
   public async sendMail({to, subject, from, templateData}:ISendMailDTO): Promise<void>{
     const message = this.client.sendMail({
       from: {
