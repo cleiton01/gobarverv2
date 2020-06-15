@@ -1,5 +1,5 @@
-import User from '@modules/users/infra/typeorm/entities/User';
 import { getRepository, Repository, Not } from 'typeorm';
+import User from '@modules/users/infra/typeorm/entities/User';
 
 import IUsersRepository from '@modules/users/repositories/IUsersRepository';
 import ICreateUserDTO from '@modules/users/dtos/ICreateUserDTO';
@@ -28,7 +28,7 @@ class UsersRepository implements IUsersRepository {
     console.log('ta dificl');
     console.log(email);
     console.log(this.ormRepository);
-    const findUser = this.ormRepository.findOne({
+    const findUser = await this.ormRepository.findOne({
       where: {email},
     });
     console.log('passou aqui')
