@@ -4,6 +4,7 @@ import FakeAppointmentRepository from '@modules/appointments/repositories/fakes/
 
 import ListProviderMonthAvailabilityService from '@modules/appointments/services/ListProviderMonthAvailabilityService';
 import Error from '@shared/errors/AppError';
+import {getDaysInMonth, getDate} from 'date-fns';
 
 describe('ListProviderMonthAvailabilityService',() => {
   it('should be able to list the month availability from provider', async () => {
@@ -13,6 +14,10 @@ describe('ListProviderMonthAvailabilityService',() => {
       fakeAppointmentRepository
     );
 
+    await fakeAppointmentRepository.create({
+      provider_id: '3',
+      date: new Date(2020,5, 19, 8, 0, 0 ),
+    });
 
     await fakeAppointmentRepository.create({
       provider_id: '3',
@@ -20,12 +25,12 @@ describe('ListProviderMonthAvailabilityService',() => {
     });
 
     await fakeAppointmentRepository.create({
-      provider_id: '4',
+      provider_id: '3',
       date: new Date(2020,5, 19, 10, 0, 0 ),
     });
 
     await fakeAppointmentRepository.create({
-      provider_id: '2',
+      provider_id: '3',
       date: new Date(2020,5, 19, 11, 0, 0 ),
     });
 
@@ -35,42 +40,37 @@ describe('ListProviderMonthAvailabilityService',() => {
     });
 
     await fakeAppointmentRepository.create({
-      provider_id: '4',
+      provider_id: '3',
       date: new Date(2020,5, 19, 13, 0, 0 ),
     });
 
     await fakeAppointmentRepository.create({
-      provider_id: '4',
+      provider_id: '3',
       date: new Date(2020,5, 19, 14, 0, 0 ),
     });
 
     await fakeAppointmentRepository.create({
-      provider_id: '4',
+      provider_id: '3',
       date: new Date(2020,5, 19, 15, 0, 0 ),
     });
 
     await fakeAppointmentRepository.create({
-      provider_id: '4',
+      provider_id: '3',
       date: new Date(2020,5, 19, 16, 0, 0 ),
     });
 
     await fakeAppointmentRepository.create({
-      provider_id: '4',
+      provider_id: '3',
       date: new Date(2020,5, 19, 17, 0, 0 ),
     });
 
     await fakeAppointmentRepository.create({
-      provider_id: '4',
-      date: new Date(2020,5, 19, 18, 0, 0 ),
-    });
-
-    await fakeAppointmentRepository.create({
-      provider_id: '5',
-      date: new Date(2020,5, 20, 10, 0, 0 ),
+      provider_id: '3',
+      date: new Date(2020,6, 20, 10, 0, 0 ),
     });
 
     const result = await listProviderMonthAvailabilityService.execute({
-      provider_id: 'a',
+      provider_id: '3',
       month: 6,
       year: 2020,
     });

@@ -39,14 +39,12 @@ class ListProvideMonthAvailabilityService {
 
     const availability = eachDayArray.map(day => {
       const appointmentsInDay = appointments.filter(appointment => {
-        const resultDate = getDate(appointment.date) === day;
-        console.log(resultDate);
-        return resultDate;
+        return getDate(appointment.date) === day ;
       });
-
+      //console.log(day, appointmentsInDay.length, appointmentsInDay.length < 10);
       return {
         day,
-        available: appointmentsInDay.length < 1000,
+        available: appointmentsInDay.length < 10,
       }
     });
 

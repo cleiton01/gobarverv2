@@ -9,7 +9,7 @@ import IFindAllProvidersDTO from '@modules/users/dtos/IFindAllProvidersDTO';
 class UsersRepository implements IUsersRepository {
   private ormRepository: Repository<User>;
 
-  constructir() {
+  constructor() {
     this.ormRepository = getRepository(User);
   }
 
