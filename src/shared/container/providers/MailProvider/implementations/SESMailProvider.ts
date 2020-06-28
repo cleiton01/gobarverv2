@@ -1,4 +1,8 @@
+// import nodemailer, {Trans} from 'nodemailer/lib/ses-transport';
 import nodemailer, {Transporter} from 'nodemailer';
+import aws from 'aws-sdk';
+import mailConfig from '@config/mail';
+
 import {inject, injectable} from 'tsyringe';
 import IMailProvider from '@shared/container/providers/MailProvider/models/IMailProvider';
 import ISendMailDTO from '@shared/container/providers/MailProvider/dtos/ISendMailDTO';
@@ -9,8 +13,8 @@ interface IMessages{
   to: string;
   body: string;
 }
-
-class SNSMailProvider implements IMailProvider {
+@injectable()
+class SESMailProvider implements IMailProvider {
   private messages:IMessages[] = [];
 
   private client: Transporter;
@@ -18,29 +22,23 @@ class SNSMailProvider implements IMailProvider {
   constructor(
     @inject('MailTemplateProvider')
     private mailTemplateProvider: IMailTemplateProvider,
-
   ) {
-    nodemailer.createTestAccount().then(account => {
-      const transporter = nodemailer.createTransport({
-        host: account.smtp.host,
-        port: account.smtp.port,
-        secure: account.smtp.secure,
-        auth: {
-          user: account.user,
-          pass: account.pass
-        },
-      });
-
-      this.client = transporter;
-    });
+    this.client = nodemailer.createTransport({
+      SES: new  aws.SES({
+        apiVersion: '2010-12-01',
+        region: 'us-east-1'
+      }),
+    })
   }
 
 
   public async sendMail({to, subject, from, templateData}:ISendMailDTO): Promise<void>{
+    const {name, email} =mailConfig.defaults.from;
+
     const message = this.client.sendMail({
       from: {
-        name: from?.name || 'Cleiton Silva',
-        address: from?.email || 'clleiton.silva@gmail.com',
+        name: from?.name || name,
+        address: from?.email || email,
       },
       to: {
         name: to.name,
@@ -50,9 +48,7 @@ class SNSMailProvider implements IMailProvider {
       html: await this.mailTemplateProvider.parse(templateData),
     });
 
-    console.log(message);
-
   }
 
 }
-export default SNSMailProvider;
+export default SESMailProvider;

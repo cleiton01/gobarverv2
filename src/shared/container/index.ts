@@ -42,6 +42,6 @@ container.registerSingleton<IUserTokenRopository>(
 );
 
 container.registerSingleton<INotificationRepository>(
-  'Notifications',
+  'NotificationMongoRepository',
   NotificationMongoRepository
 );

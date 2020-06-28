@@ -8,6 +8,8 @@ import routes from './routes';
 import uploadConfig from '@config/upload';
 import AppError from '@shared/errors/AppError';
 
+import {errors} from 'celebrate';
+
 import '@shared/container';
 import '@shared/infra/typeorm/index'
 
@@ -19,6 +21,7 @@ app.use(cors());
 app.use('/files',express.static(uploadConfig.uploadsFolder) );
 app.use(routes);
 
+app.use(errors);
 app.use((err: Error, request: Request, response: Response, next: NextFunction) => {
 
   console.log('=========================================');

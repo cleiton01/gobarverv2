@@ -8,9 +8,10 @@ import {ObjectID,
 } from 'typeorm';
 
 @Entity('notification')
-class Notification{
+class NotificationMongo{
+
   @ObjectIdColumn()
-  id: ObjectID;
+  ids: ObjectID;
 
   @Column()
   content: string;
@@ -34,4 +35,4 @@ class Notification{
   updated_at: Date;
 }
 
-export default Notification;
+export default NotificationMongo;

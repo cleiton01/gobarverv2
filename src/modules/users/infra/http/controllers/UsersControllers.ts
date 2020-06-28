@@ -1,5 +1,6 @@
 import {Request, Response} from 'express';
 import {container} from 'tsyringe';
+import {classToClass} from 'class-transformer';
 
 import CreateUserService from '@modules/users/services/CreateUserService';
 import UsersRepository  from '@modules/users/infra/typeorm/repositories/UserRepository';
@@ -18,9 +19,7 @@ class UsersController {
       email
     });
 
-    delete user.password;
-
-    return res.status(200).json(user);
+    return res.status(200).json(classToClass(user));
 
   }
 

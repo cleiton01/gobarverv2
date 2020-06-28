@@ -1,5 +1,6 @@
 import {uuid} from 'uuidv4';
 import {Entity, Column, PrimaryGeneratedColumn} from 'typeorm';
+import {Exclude, Expose} from 'class-transformer';
 
 @Entity('users_v2')
 class User{
@@ -14,6 +15,7 @@ class User{
   email: string;
 
   @Column()
+  @Exclude()
   password: string;
 
   @Column()
@@ -24,6 +26,11 @@ class User{
 
   @Column('timestamp')
   updated_at: Date;
+
+  @Expose({name: 'avatar_url'})
+  getAvatarUrl(): string | null{
+    return this.avatar ? `${process.env.APP_API_URL}/files/${this.avatar}` : null
+  }
 }
 
 export default User;

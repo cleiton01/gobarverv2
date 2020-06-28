@@ -6,7 +6,7 @@ import Error from '@shared/errors/AppError';
 import Appointment from '@modules/appointments/infra/typeorm/entities/Appointment';
 import IAppointmentRepository from '@modules/appointments/repositories/IAppointmentRepository';
 
-import INotificationRepository from '@modules/Notifications/repositories/INotificationRepository';
+import INotificationRepository from '@modules/notifications/repositories/INotificationRepository';
 
 
 interface IRequest {
@@ -20,7 +20,7 @@ class CreateAppointmentService {
   constructor (
       @inject('AppointmentsRepository')
       private appointmentsRepository: IAppointmentRepository,
-      @inject('Notifications')
+      @inject('NotificationMongoRepository')
       private notificationRepository: INotificationRepository
     ) {}
 

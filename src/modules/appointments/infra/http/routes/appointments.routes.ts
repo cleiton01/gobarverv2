@@ -1,4 +1,5 @@
 import {Router} from 'express';
+import {celebrate, Segments, Joi} from 'celebrate';
 
 import ensureAuthenticated from '@modules/users/infra/http/middlewares/ensureAuthenticated';
 import AppointmentController from '@modules/appointments/infra/http/controllers/AppointmetsController';
@@ -13,7 +14,11 @@ appintmentsRouter.use(ensureAuthenticated);
 
 appintmentsRouter.get('/', appoitmentController.find);
 
-appintmentsRouter.post('/', appoitmentController.create);
+appintmentsRouter.post('/',celebrate({
+  [Segments.BODY]:{
+    provider_id: Joi.string().uuid().required(),
+  }
+}), appoitmentController.create);
 
 appintmentsRouter.get('/me', providerAppointmentsController.index);
 
