@@ -16,12 +16,14 @@ describe('ListProviderDayAvailabilityService',() => {
 
     await fakeAppointmentRepository.create({
       provider_id: '5',
-      date: new Date(2020,5, 20, 8-3, 0, 0 ),
+      user_id: '1',
+      date: new Date(2020,6, 20, 8-3, 0, 0 ),
     });
 
     await fakeAppointmentRepository.create({
       provider_id: '6',
-      date: new Date(2020,5, 20, 10, 0, 0 ),
+      user_id: '1',
+      date: new Date(2020,6, 20, 10, 0, 0 ),
     });
 
     const result = await listProviderDayAvailabilityService.execute({
