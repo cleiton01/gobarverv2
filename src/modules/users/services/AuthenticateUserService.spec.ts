@@ -12,10 +12,9 @@ describe('AuthenticateUser',() => {
     const fakeUserRespository = new FakeUsersRespository();
     const fakeHashProvider = new FakeHashProvider();
 
-    const createUser = new CreateUserService(fakeUserRespository, fakeHashProvider);
     const authUser = new AuthenticateUserService(fakeUserRespository, fakeHashProvider);
 
-    await createUser.execute({
+    await fakeUserRespository.create({
       name: 'John Doe',
       email: 'John.Doe@exemple.com',
       password: '123456'
@@ -34,10 +33,9 @@ describe('AuthenticateUser',() => {
     const fakeUserRespository = new FakeUsersRespository();
     const fakeHashProvider = new FakeHashProvider();
 
-    const createUser = new CreateUserService(fakeUserRespository, fakeHashProvider);
     const authUser = new AuthenticateUserService(fakeUserRespository, fakeHashProvider);
 
-    await createUser.execute({
+    await fakeUserRespository.create({
       name: 'John Doe',
       email: 'John.Doe@exemple.com',
       password: '123456'
@@ -56,10 +54,9 @@ describe('AuthenticateUser',() => {
     const fakeUserRespository = new FakeUsersRespository();
     const fakeHashProvider = new FakeHashProvider();
 
-    const createUser = new CreateUserService(fakeUserRespository, fakeHashProvider);
     const authUser = new AuthenticateUserService(fakeUserRespository, fakeHashProvider);
 
-    await createUser.execute({
+    await fakeUserRespository.create({
       name: 'John Doe',
       email: 'John.Doe@exemple.com',
       password: '123456'

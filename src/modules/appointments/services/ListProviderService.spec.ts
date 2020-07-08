@@ -2,16 +2,18 @@ import 'reflect-metadata';
 
 import FakeUsersRespository from '@modules/users/repositories/fakes/FakeUsersRepository';
 import FakeHashProvider from '@modules/users/providers/HashProvider/fakes/FakeHashProvider';
-
+import FakeCacheProvider from '@shared/container/providers/CacheProvider/fake/FakeCacheProvider';
 import ListProviderService from '@modules/appointments/services/ListProviderService';
 import Error from '@shared/errors/AppError';
 
 describe('ListProviders',() => {
   it('should be able to list providers', async () => {
     const fakeUserRespository = new FakeUsersRespository();
+    const fakeCacheProvider = new FakeCacheProvider();
 
     const listProfileService = new ListProviderService(
-      fakeUserRespository
+      fakeUserRespository,
+      fakeCacheProvider
     );
 
     const user = await fakeUserRespository.create({

@@ -29,7 +29,7 @@ class SendForgotEmailService {
     const user = await this.usersRepository.findByEmail(email);
 
     if(!user){
-      throw new Error('User does not exists');
+      throw new Error('User does not exists', 400);
     }
 
     const {token} = await this.userTokenRepository.generate(user.id);
@@ -37,7 +37,7 @@ class SendForgotEmailService {
     const forgotPasswordTemplate = path.resolve(
       __dirname, '..','views','forgot_password.hbs',
     );
-
+    console.log('step 3')
 
     await this.mailProvider.sendMail({
       to: {
@@ -49,13 +49,12 @@ class SendForgotEmailService {
         file: forgotPasswordTemplate,
         variables: {
           name: user.name,
+          token: token,
           link: `${process.env.APP_WEB_URL}/reset_password?token={{token}}`
         }
       }
     });
-
-
-    //return user;
+    console.log('step 4')
   }
 }
 

@@ -6,6 +6,7 @@ import User from '@modules/users/infra/typeorm/entities/User';
 import {inject, injectable} from 'tsyringe';
 import Error from '@shared/errors/AppError';
 import IUsersRepository from '@modules/users/repositories/IUsersRepository';
+import ICacheProvider from '@shared/container/providers/CacheProvider/models/ICacheProvider';
 
 interface IRequest {
   name: string;
@@ -20,11 +21,13 @@ class CreateUserService {
     private usersRepository: IUsersRepository,
     @inject('HashProvider')
     private hashProvider: IHashProvider,
+    @inject('CacheProvider')
+    private cacheProvider: ICacheProvider,
 
   ){}
 
   public async execute ({name,password,email}: IRequest): Promise<User> {
-    
+
     const checkIfUserExists = await this.usersRepository.findByEmail(email);
 
     if (checkIfUserExists){
@@ -39,6 +42,7 @@ class CreateUserService {
       email,
     });
 
+    await this.cacheProvider.invalidatePrefix('providers-list')
     return user;
   }
 }

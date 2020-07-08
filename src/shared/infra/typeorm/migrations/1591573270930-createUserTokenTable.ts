@@ -14,13 +14,15 @@ export default class createUserTokenTable1591573270930 implements MigrationInter
               name: 'id',
               type: 'varchar',
               isPrimary: true,
-              generationStrategy: 'uuid'
+              generationStrategy: 'uuid',
+              default:'uuid_generate_v4()',
             },
             {
               name: 'token',
               type: 'varchar',
               isNullable: false,
-              generationStrategy: 'uuid'
+              generationStrategy: 'uuid',
+              default:'uuid_generate_v4()',
             },
             {
               name: 'user_id',

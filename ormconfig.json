@@ -21,14 +21,14 @@
     }
   },
   {
-    "name": "mongo",
+    "name": "mongodb",
     "type": "mongodb",
     "host": "localhost",
     "port": 27017,
     "database": "gbrbr",
     "useUnifiedTopology": true,
     "entities":[
-      "./src/modules/**/infra/typeorm/entities/*.ts"
+      "./src/modules/**/infra/typeorm/schema/*.ts"
     ]
   }
 ]

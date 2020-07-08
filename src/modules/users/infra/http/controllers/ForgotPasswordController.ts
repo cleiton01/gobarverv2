@@ -7,11 +7,11 @@ class ForgotPasswordController{
   public async create(req: Request, res: Response){
     const {email} = req.body;
 
-  const sendForgotEmailService = container.resolve(SendForgotEmailService);
+    const sendForgotEmailService = container.resolve(SendForgotEmailService);
 
-  await sendForgotEmailService.execute({ email });
+    await sendForgotEmailService.execute({ email });
 
-  return res.status(204).json();
+    return res.status(200).json();
   }
 }
 

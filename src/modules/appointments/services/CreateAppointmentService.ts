@@ -7,7 +7,7 @@ import Appointment from '@modules/appointments/infra/typeorm/entities/Appointmen
 import IAppointmentRepository from '@modules/appointments/repositories/IAppointmentRepository';
 
 import INotificationRepository from '@modules/notifications/repositories/INotificationRepository';
-
+import ICacheProvider from '@shared/container/providers/CacheProvider/models/ICacheProvider';
 
 interface IRequest {
   provider_id: string;
@@ -21,7 +21,9 @@ class CreateAppointmentService {
       @inject('AppointmentsRepository')
       private appointmentsRepository: IAppointmentRepository,
       @inject('NotificationMongoRepository')
-      private notificationRepository: INotificationRepository
+      private notificationRepository: INotificationRepository,
+      @inject('CacheProvider')
+      private cacheProvider: ICacheProvider
     ) {}
 
 
@@ -42,7 +44,8 @@ class CreateAppointmentService {
       throw new Error('Invalid hour to appointment');
     }
     const findAppointmentInSameDate = await this.appointmentsRepository.findByDate(
-      appointmentDate
+      appointmentDate,
+      provider_id
       );
 
       if (findAppointmentInSameDate){
@@ -64,7 +67,9 @@ class CreateAppointmentService {
         recipient_id: provider_id,
         content: `notification - novo agendamento criado ${dateFormated}`
       })
+      const cacheKey = `providers-appointment-list:${provider_id}:${format(appointmentDate, 'yyyy-M-d' )}`;
 
+      await this.cacheProvider.invalidate(cacheKey);
       return appointment;
   }
 }

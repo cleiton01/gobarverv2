@@ -1,6 +1,6 @@
 import INotificationDTO from '@modules/notifications/dtos/INotificationDTO';
-import NotificationMongo from '@modules/notifications/infra/typeorm/entities/NotificationMongo';
+import Notification from '@modules/notifications/infra/typeorm/schema/Notification';
 
 export default interface INotificationRepository{
-  create(data: INotificationDTO): Promise<NotificationMongo>;
+  create(data: INotificationDTO): Promise<Notification>;
 }

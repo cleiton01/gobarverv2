@@ -10,7 +10,7 @@ import UserAvatarController from '@modules/users/infra/http/controllers/UserAvat
 import ensureAuth from '@modules/users/infra/http/middlewares/ensureAuthenticated';
 
 const userRouter = Router();
-const upload = multer(uploadConfig);
+const upload = multer(uploadConfig.multer);
 const usersController = new UsersController();
 const userAvatarController = new  UserAvatarController();
 
@@ -18,7 +18,7 @@ userRouter.get('/', usersController.index);
 
 userRouter.post('/', celebrate({
   [Segments.BODY]: {
-    nome: Joi.string().required(),
+    name: Joi.string().required(),
     email: Joi.string().email().required(),
     password: Joi.string().required()
   }

@@ -2,14 +2,14 @@ import {ObjectID} from 'mongodb';
 
 import INotificationRepository from '@modules/notifications/repositories/INotificationRepository';
 import INotificationDTO from '@modules/notifications/dtos/INotificationDTO';
-import NotificationMongo from '@modules/notifications/infra/typeorm/entities/NotificationMongo';
+import Notification from '@modules/notifications/infra/typeorm/schema/Notification';
 
 class FakesNotificationRepository implements INotificationRepository {
- private notifications:NotificationMongo[] = [];
+ private notifications:Notification[] = [];
 
-  public async create({content, recipient_type,recipient_id}: INotificationDTO): Promise<NotificationMongo>{
+  public async create({content, recipient_type,recipient_id}: INotificationDTO): Promise<Notification>{
 
-    const notification = new NotificationMongo();
+    const notification = new Notification();
 
     Object.assign(notification, {id: new ObjectID(), content, recipient_type,recipient_id})
 
