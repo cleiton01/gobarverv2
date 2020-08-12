@@ -50,7 +50,7 @@ class SendForgotEmailService {
         variables: {
           name: user.name,
           token: token,
-          link: `${process.env.APP_WEB_URL}/reset_password?token={{token}}`
+          link: `${process.env.APP_WEB_URL}/reset-password?token={{token}}`
         }
       }
     });

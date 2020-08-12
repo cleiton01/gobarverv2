@@ -9,7 +9,7 @@ class NotificationRepository implements INotificationRepository {
 
   private ormRepository: MongoRepository<Notification>;
 
-  constructir() {
+  constructor() {
     this.ormRepository = getMongoRepository(Notification, "mongodb");
   }
 

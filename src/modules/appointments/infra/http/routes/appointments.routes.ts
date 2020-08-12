@@ -17,6 +17,7 @@ appintmentsRouter.get('/', appoitmentController.find);
 appintmentsRouter.post('/',celebrate({
   [Segments.BODY]:{
     provider_id: Joi.string().uuid().required(),
+    date: Joi.date().required()
   }
 }), appoitmentController.create);
 

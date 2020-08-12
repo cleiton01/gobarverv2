@@ -5,6 +5,7 @@ import Error from '@shared/errors/AppError';
 import Appointment from '@modules/appointments/infra/typeorm/entities/Appointment';
 import IAppointmentRepository from '@modules/appointments/repositories/IAppointmentRepository'
 import ICacheProvider from '@shared/container/providers/CacheProvider/models/ICacheProvider';
+import {classToClass} from 'class-transformer';
 
 interface IRequest {
   provider_id: string;
@@ -16,7 +17,7 @@ interface IRequest {
 @injectable()
 class ListProviderAppointmentsService {
   constructor(
-    @inject('AppointmentRepository')
+    @inject('AppointmentsRepository')
     private appointmentRepository: IAppointmentRepository,
     @inject('CacheProvider')
     private cacheProvider: ICacheProvider,
@@ -36,7 +37,7 @@ class ListProviderAppointmentsService {
         year
       });
 
-      await this.cacheProvider.save(cacheKey, appointments);
+      await this.cacheProvider.save(cacheKey, classToClass(appointments));
     }
 
     return appointments;

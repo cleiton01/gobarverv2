@@ -9,13 +9,13 @@ import IFindAllInDayFromProviderDTO from '@modules/appointments/dto/IFindAllInDa
 class AppoinmentsRepository implements IAppointmentRepository {
   private ormRepository: Repository<Appointment>;
 
-  constructir() {
+  constructor() {
     this.ormRepository = getRepository(Appointment);
   }
 
-  public async findByDate(date: Date) : Promise<Appointment | undefined> {
+  public async findByDate(date: Date, provider_id: string) : Promise<Appointment | undefined> {
     const findAppointment = await this.ormRepository.findOne({
-      where: {date},
+      where: {date, provider_id},
     });
 
     return findAppointment;
@@ -44,8 +44,12 @@ class AppoinmentsRepository implements IAppointmentRepository {
     const appointments = this.ormRepository.find({
       where: {
         provider_id,
-        date: Raw(dataFieldName => `to_char(${dataFieldName}, 'MMYYYY') = '${parsedMonth}${year}'`),
-      }
+        date: Raw(
+          dataFieldName =>
+            `to_char(${dataFieldName}, 'MMYYYY') = '${parsedMonth}${year}'`
+          ),
+      },
+      relations:['user'],
     });
 
     return appointments;
