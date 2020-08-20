@@ -11,7 +11,7 @@
     "@types/nodemailer": "^6.4.0",
     "@types/redis": "^2.8.24",
     "aws-sdk": "^2.706.0",
-    "bcrypt": "^4.0.1",
+    "bcrypt": "^5.0.0",
     "celebrate": "^12.1.1",
     "class-transformer": "^0.2.3",
     "cors": "^2.8.5",
